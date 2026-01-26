@@ -1,0 +1,100 @@
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.welcome-card {
+  .welcome-content {
+    text-align: center;
+
+    h2 {
+      color: #262626;
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    p {
+      color: #8c8c8c;
+      font-size: 16px;
+      margin-bottom: 0;
+    }
+  }
+}
+
+.feature-card {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  height: 100%;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+    .feature-icon {
+      transform: scale(1.1);
+    }
+  }
+
+  .feature-content {
+    text-align: center;
+    padding: 24px 0;
+
+    .feature-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .notification-icon {
+      color: #1890ff;
+    }
+
+    .s3-icon {
+      color: #52c41a;
+    }
+
+    .sqs-icon {
+      color: #faad14;
+    }
+    
+    .ses-icon {
+      color: #eb2f96;
+    }
+
+    h3 {
+      font-size: 20px;
+      margin-bottom: 12px;
+      color: #262626;
+    }
+
+    p {
+      color: #8c8c8c;
+      margin-bottom: 24px;
+      min-height: 48px;
+    }
+
+    button {
+      width: 100%;
+    }
+  }
+}
+
+.features-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    padding: 8px 0;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    span[nz-icon] {
+      font-size: 16px;
+    }
+  }
+}

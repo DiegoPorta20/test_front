@@ -1,0 +1,153 @@
+<div class="s3-container">
+  <nz-card nzTitle="Gestión de Archivos S3">
+    <nz-tabset>
+      <!-- Tab: Upload Simple -->
+      <nz-tab nzTitle="Subir Archivo">
+        <form nz-form nzLayout="vertical">
+          <nz-form-item>
+            <nz-form-label>Carpeta (opcional)</nz-form-label>
+            <nz-form-control>
+              <input nz-input [(ngModel)]="folder" name="folder" placeholder="Ej: uploads/images" />
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label>User ID (opcional para notificación)</nz-form-label>
+            <nz-form-control>
+              <input nz-input [(ngModel)]="userId" name="userId" placeholder="ID del usuario" />
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-upload
+            [nzBeforeUpload]="beforeUpload"
+            [nzFileList]="fileList"
+            [nzRemove]="handleRemove"
+            nzMultiple="false">
+            <button nz-button>
+              <span nz-icon nzType="upload"></span>
+              Seleccionar Archivo
+            </button>
+          </nz-upload>
+
+          <button 
+            nz-button 
+            nzType="primary" 
+            [nzLoading]="uploading"
+            [disabled]="fileList.length === 0"
+            (click)="handleUpload()"
+            style="margin-top: 16px;">
+            <span nz-icon nzType="cloud-upload"></span>
+            {{ uploading ? 'Subiendo...' : 'Subir a S3' }}
+          </button>
+        </form>
+      </nz-tab>
+
+      <!-- Tab: Upload Múltiple -->
+      <nz-tab nzTitle="Subir Múltiples">
+        <form nz-form nzLayout="vertical">
+          <nz-form-item>
+            <nz-form-label>Carpeta (opcional)</nz-form-label>
+            <nz-form-control>
+              <input nz-input [(ngModel)]="folderMultiple" name="folderMultiple" placeholder="Ej: uploads/documents" />
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-upload
+            [nzBeforeUpload]="beforeUploadMultiple"
+            [nzFileList]="multipleFileList"
+            [nzRemove]="handleRemoveMultiple"
+            nzMultiple="true">
+            <button nz-button>
+              <span nz-icon nzType="upload"></span>
+              Seleccionar Archivos
+            </button>
+          </nz-upload>
+
+          <button 
+            nz-button 
+            nzType="primary" 
+            [nzLoading]="uploadingMultiple"
+            [disabled]="multipleFileList.length === 0"
+            (click)="handleUploadMultiple()"
+            style="margin-top: 16px;">
+            <span nz-icon nzType="cloud-upload"></span>
+            {{ uploadingMultiple ? 'Subiendo...' : 'Subir a S3' }}
+          </button>
+        </form>
+      </nz-tab>
+
+      <!-- Tab: Archivos Subidos -->
+      <nz-tab nzTitle="Archivos Subidos">
+        <nz-empty *ngIf="uploadedFiles.length === 0" nzNotFoundContent="No hay archivos subidos">
+        </nz-empty>
+
+        <nz-list 
+          *ngIf="uploadedFiles.length > 0"
+          [nzDataSource]="uploadedFiles" 
+          nzBordered 
+          nzSize="small">
+          <nz-list-item *ngFor="let file of uploadedFiles">
+            <nz-list-item-meta>
+              <nz-list-item-meta-avatar>
+                <nz-avatar nzIcon="file" [style.background-color]="'#1890ff'"></nz-avatar>
+              </nz-list-item-meta-avatar>
+              <nz-list-item-meta-title>
+                {{ file.name }}
+              </nz-list-item-meta-title>
+              <nz-list-item-meta-description>
+                <div>Key: <code>{{ file.key }}</code></div>
+                <div>Bucket: {{ file.bucket }}</div>
+                <div>Subido: {{ file.uploadedAt | date:'medium' }}</div>
+              </nz-list-item-meta-description>
+            </nz-list-item-meta>
+            <ul nz-list-item-actions>
+              <nz-list-item-action>
+                <button nz-button nzType="link" (click)="getSignedUrl(file.key)" [nzLoading]="file.loadingUrl">
+                  <span nz-icon nzType="link"></span>
+                  URL Firmada
+                </button>
+              </nz-list-item-action>
+              <nz-list-item-action>
+                <button nz-button nzType="link" nzDanger (click)="deleteFile(file.key)" [nzLoading]="file.deleting">
+                  <span nz-icon nzType="delete"></span>
+                  Eliminar
+                </button>
+              </nz-list-item-action>
+            </ul>
+          </nz-list-item>
+        </nz-list>
+      </nz-tab>
+    </nz-tabset>
+  </nz-card>
+
+  <!-- Modal para mostrar URL firmada -->
+  <nz-modal
+    [(nzVisible)]="signedUrlModalVisible"
+    nzTitle="URL Firmada"
+    (nzOnCancel)="signedUrlModalVisible = false"
+    [nzFooter]="null">
+    <ng-container *nzModalContent>
+      <p>Esta URL expira en {{ signedUrlExpiration }} segundos:</p>
+      <nz-input-group [nzSuffix]="suffixIconButton">
+        <input 
+          nz-input 
+          [value]="signedUrl" 
+          readonly 
+          #urlInput />
+      </nz-input-group>
+      <ng-template #suffixIconButton>
+        <button nz-button nzType="link" (click)="copyToClipboard(urlInput.value)">
+          <span nz-icon nzType="copy"></span>
+        </button>
+      </ng-template>
+      <button 
+        nz-button 
+        nzType="primary" 
+        (click)="openUrl(signedUrl)" 
+        style="margin-top: 16px; width: 100%;">
+        <span nz-icon nzType="eye"></span>
+        Abrir en Nueva Pestaña
+      </button>
+    </ng-container>
+  </nz-modal>
+</div>

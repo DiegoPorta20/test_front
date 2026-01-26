@@ -1,0 +1,38 @@
+.notifications-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.connected-users-section {
+  margin-top: 16px;
+}
+
+.notification-item {
+  padding: 8px 0;
+
+  .notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+
+    strong {
+      font-size: 16px;
+    }
+  }
+
+  p {
+    margin: 8px 0;
+    color: rgba(0, 0, 0, 0.65);
+  }
+
+  .notification-time {
+    color: rgba(0, 0, 0, 0.45);
+    font-size: 12px;
+  }
+}
+
+nz-form-item {
+  margin-bottom: 16px;
+}

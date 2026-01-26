@@ -1,0 +1,322 @@
+<div class="ses-container">
+  <nz-card nzTitle="Gestión de Correos Electrónicos (SES)">
+    <nz-tabset>
+      <!-- Tab: Enviar Correo Simple -->
+      <nz-tab nzTitle="Enviar Correo">
+        <form nz-form [formGroup]="emailForm" (ngSubmit)="sendEmail()" nzLayout="vertical">
+          <nz-form-item>
+            <nz-form-label nzRequired>Destinatario(s)</nz-form-label>
+            <nz-form-control nzErrorTip="Por favor ingrese al menos un destinatario">
+              <nz-select 
+                formControlName="to" 
+                nzMode="tags" 
+                nzPlaceHolder="Ingrese emails y presione Enter">
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label nzRequired>Asunto</nz-form-label>
+            <nz-form-control nzErrorTip="Por favor ingrese un asunto">
+              <input nz-input formControlName="subject" placeholder="Asunto del correo" />
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label nzRequired>Cuerpo del Mensaje</nz-form-label>
+            <nz-form-control nzErrorTip="Por favor ingrese el mensaje">
+              <textarea 
+                nz-input 
+                formControlName="body" 
+                [nzAutosize]="{ minRows: 6, maxRows: 12 }" 
+                placeholder="Contenido del correo">
+              </textarea>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-control>
+              <label nz-checkbox formControlName="isHtml">Enviar como HTML</label>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-collapse>
+            <nz-collapse-panel nzHeader="Opciones Avanzadas" [nzActive]="false">
+              <nz-form-item>
+                <nz-form-label>CC (Con Copia)</nz-form-label>
+                <nz-form-control>
+                  <nz-select 
+                    formControlName="cc" 
+                    nzMode="tags" 
+                    nzPlaceHolder="Emails con copia">
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-label>BCC (Copia Oculta)</nz-form-label>
+                <nz-form-control>
+                  <nz-select 
+                    formControlName="bcc" 
+                    nzMode="tags" 
+                    nzPlaceHolder="Emails con copia oculta">
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-label>Reply To</nz-form-label>
+                <nz-form-control>
+                  <nz-select 
+                    formControlName="replyTo" 
+                    nzMode="tags" 
+                    nzPlaceHolder="Email(s) de respuesta">
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </nz-collapse-panel>
+          </nz-collapse>
+
+          <button 
+            nz-button 
+            nzType="primary" 
+            [nzLoading]="sending" 
+            [disabled]="!emailForm.valid"
+            style="margin-top: 16px;">
+            <span nz-icon nzType="mail"></span>
+            Enviar Correo
+          </button>
+        </form>
+      </nz-tab>
+
+      <!-- Tab: Envío Masivo -->
+      <nz-tab nzTitle="Envío Masivo">
+        <form nz-form [formGroup]="bulkEmailForm" (ngSubmit)="sendBulkEmail()" nzLayout="vertical">
+          <nz-form-item>
+            <nz-form-label nzRequired>Destinatarios</nz-form-label>
+            <nz-form-control nzErrorTip="Por favor ingrese al menos un destinatario">
+              <nz-select 
+                formControlName="recipients" 
+                nzMode="tags" 
+                nzPlaceHolder="Ingrese emails y presione Enter">
+              </nz-select>
+              <small>Los correos se enviarán individualmente a cada destinatario</small>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label nzRequired>Asunto</nz-form-label>
+            <nz-form-control nzErrorTip="Por favor ingrese un asunto">
+              <input nz-input formControlName="subject" placeholder="Asunto del correo" />
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label nzRequired>Cuerpo del Mensaje</nz-form-label>
+            <nz-form-control nzErrorTip="Por favor ingrese el mensaje">
+              <textarea 
+                nz-input 
+                formControlName="body" 
+                [nzAutosize]="{ minRows: 6, maxRows: 12 }" 
+                placeholder="Contenido del correo">
+              </textarea>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-control>
+              <label nz-checkbox formControlName="isHtml">Enviar como HTML</label>
+            </nz-form-control>
+          </nz-form-item>
+
+          <button 
+            nz-button 
+            nzType="primary" 
+            [nzLoading]="sendingBulk" 
+            [disabled]="!bulkEmailForm.valid"
+            style="margin-top: 16px;">
+            <span nz-icon nzType="mail"></span>
+            Enviar a Todos
+          </button>
+        </form>
+      </nz-tab>
+
+      <!-- Tab: Plantillas -->
+      <nz-tab nzTitle="Plantillas">
+        <button 
+          nz-button 
+          nzType="default" 
+          (click)="loadTemplates()" 
+          [nzLoading]="loadingTemplates"
+          style="margin-bottom: 16px;">
+          <span nz-icon nzType="reload"></span>
+          Actualizar Plantillas
+        </button>
+
+        <button 
+          nz-button 
+          nzType="primary" 
+          (click)="showCreateTemplateModal()"
+          style="margin-bottom: 16px; margin-left: 8px;">
+          <span nz-icon nzType="plus"></span>
+          Nueva Plantilla
+        </button>
+
+        <nz-empty 
+          *ngIf="templates.length === 0 && !loadingTemplates" 
+          nzNotFoundContent="No hay plantillas creadas">
+        </nz-empty>
+
+        <nz-list 
+          *ngIf="templates.length > 0"
+          [nzDataSource]="templates" 
+          nzBordered>
+          <nz-list-item *ngFor="let template of templates">
+            <nz-list-item-meta>
+              <nz-list-item-meta-title>
+                {{ template.Name }}
+              </nz-list-item-meta-title>
+              <nz-list-item-meta-description>
+                Creada: {{ template.CreatedTimestamp | date:'medium' }}
+              </nz-list-item-meta-description>
+            </nz-list-item-meta>
+            <ul nz-list-item-actions>
+              <nz-list-item-action>
+                <button nz-button nzType="link" (click)="useTemplate(template.Name)">
+                  <span nz-icon nzType="mail"></span>
+                  Usar
+                </button>
+              </nz-list-item-action>
+              <nz-list-item-action>
+                <button nz-button nzType="link" (click)="viewTemplate(template.Name)">
+                  <span nz-icon nzType="eye"></span>
+                  Ver
+                </button>
+              </nz-list-item-action>
+              <nz-list-item-action>
+                <button nz-button nzType="link" nzDanger (click)="deleteTemplate(template.Name)">
+                  <span nz-icon nzType="delete"></span>
+                  Eliminar
+                </button>
+              </nz-list-item-action>
+            </ul>
+          </nz-list-item>
+        </nz-list>
+      </nz-tab>
+    </nz-tabset>
+  </nz-card>
+</div>
+
+<!-- Modal para crear plantilla -->
+<nz-modal
+  [(nzVisible)]="createTemplateModalVisible"
+  nzTitle="Crear Plantilla de Correo"
+  (nzOnCancel)="createTemplateModalVisible = false"
+  (nzOnOk)="createTemplate()"
+  [nzOkLoading]="creatingTemplate"
+  nzWidth="700px">
+  <ng-container *nzModalContent>
+    <form nz-form [formGroup]="templateForm" nzLayout="vertical">
+      <nz-form-item>
+        <nz-form-label nzRequired>Nombre de la Plantilla</nz-form-label>
+        <nz-form-control nzErrorTip="Por favor ingrese un nombre">
+          <input nz-input formControlName="name" placeholder="mi-plantilla" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzRequired>Asunto</nz-form-label>
+        <nz-form-control nzErrorTip="Por favor ingrese un asunto">
+          <input nz-input formControlName="subject" placeholder="Asunto del correo" />
+          <small>Puede usar variables: {{"{{variable}}"}}</small>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzRequired>Cuerpo HTML</nz-form-label>
+        <nz-form-control nzErrorTip="Por favor ingrese el cuerpo HTML">
+          <textarea 
+            nz-input 
+            formControlName="htmlBody" 
+            [nzAutosize]="{ minRows: 6, maxRows: 12 }" 
+            placeholder="<h1>Hola &#123;&#123;nombre&#125;&#125;</h1>">
+          </textarea>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label>Cuerpo Texto Plano (opcional)</nz-form-label>
+        <nz-form-control>
+          <textarea 
+            nz-input 
+            formControlName="textBody" 
+            [nzAutosize]="{ minRows: 3, maxRows: 6 }" 
+            placeholder="Versión en texto plano">
+          </textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>
+
+<!-- Modal para usar plantilla -->
+<nz-modal
+  [(nzVisible)]="useTemplateModalVisible"
+  [nzTitle]="'Enviar correo con plantilla: ' + selectedTemplateName"
+  (nzOnCancel)="useTemplateModalVisible = false"
+  (nzOnOk)="sendTemplatedEmail()"
+  [nzOkLoading]="sendingTemplated"
+  nzWidth="700px">
+  <ng-container *nzModalContent>
+    <form nz-form [formGroup]="templatedEmailForm" nzLayout="vertical">
+      <nz-form-item>
+        <nz-form-label nzRequired>Destinatario(s)</nz-form-label>
+        <nz-form-control nzErrorTip="Por favor ingrese al menos un destinatario">
+          <nz-select 
+            formControlName="to" 
+            nzMode="tags" 
+            nzPlaceHolder="Ingrese emails">
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzRequired>Datos de la Plantilla (JSON)</nz-form-label>
+        <nz-form-control nzErrorTip="Por favor ingrese datos válidos en formato JSON">
+          <textarea 
+            nz-input 
+            formControlName="templateData" 
+            [nzAutosize]="{ minRows: 4, maxRows: 8 }" 
+            placeholder='{"nombre": "Juan", "empresa": "Mi Empresa"}'>
+          </textarea>
+          <small>Datos para reemplazar las variables de la plantilla</small>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>
+
+<!-- Modal para ver plantilla -->
+<nz-modal
+  [(nzVisible)]="viewTemplateModalVisible"
+  [nzTitle]="'Detalles de la plantilla: ' + selectedTemplateName"
+  (nzOnCancel)="viewTemplateModalVisible = false"
+  [nzFooter]="null"
+  nzWidth="800px">
+  <ng-container *nzModalContent>
+    <nz-descriptions nzBordered *ngIf="viewingTemplate">
+      <nz-descriptions-item nzTitle="Nombre" [nzSpan]="3">
+        {{ viewingTemplate.TemplateName }}
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Asunto" [nzSpan]="3">
+        {{ viewingTemplate.SubjectPart }}
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="HTML" [nzSpan]="3">
+        <pre style="max-height: 300px; overflow: auto;">{{ viewingTemplate.HtmlPart }}</pre>
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Texto Plano" [nzSpan]="3" *ngIf="viewingTemplate.TextPart">
+        <pre style="max-height: 200px; overflow: auto;">{{ viewingTemplate.TextPart }}</pre>
+      </nz-descriptions-item>
+    </nz-descriptions>
+  </ng-container>
+</nz-modal>

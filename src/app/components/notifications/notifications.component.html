@@ -1,0 +1,200 @@
+<div class="notifications-container">
+  <nz-card [nzTitle]="cardTitle" [nzExtra]="extraTemplate">
+    <nz-tabset [(nzSelectedIndex)]="selectedTabIndex">
+      <!-- Tab: Enviar a Usuario -->
+      <nz-tab nzTitle="Enviar a Usuario">
+        <form nz-form [formGroup]="sendUserForm" (ngSubmit)="sendToUser()" nzLayout="vertical">
+          <nz-form-item>
+            <nz-form-label nzRequired>ID de Usuario</nz-form-label>
+            <nz-form-control nzErrorTip="Por favor ingrese el ID del usuario">
+              <input nz-input formControlName="userId" placeholder="Ej: user123" />
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label nzRequired>Título</nz-form-label>
+            <nz-form-control nzErrorTip="Por favor ingrese un título">
+              <input nz-input formControlName="title" placeholder="Título de la notificación" />
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label nzRequired>Mensaje</nz-form-label>
+            <nz-form-control nzErrorTip="Por favor ingrese un mensaje">
+              <textarea nz-input formControlName="message" [nzAutosize]="{ minRows: 3, maxRows: 6 }" 
+                placeholder="Contenido de la notificación"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label>Tipo</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="type" nzPlaceHolder="Seleccione un tipo">
+                <nz-option nzValue="info" nzLabel="Información"></nz-option>
+                <nz-option nzValue="success" nzLabel="Éxito"></nz-option>
+                <nz-option nzValue="warning" nzLabel="Advertencia"></nz-option>
+                <nz-option nzValue="error" nzLabel="Error"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+
+          <button nz-button nzType="primary" [nzLoading]="loading" [disabled]="!sendUserForm.valid">
+            <span nz-icon nzType="send"></span>
+            Enviar Notificación
+          </button>
+        </form>
+      </nz-tab>
+
+      <!-- Tab: Broadcast -->
+      <nz-tab nzTitle="Broadcast">
+        <form nz-form [formGroup]="broadcastForm" (ngSubmit)="broadcast()" nzLayout="vertical">
+          <nz-form-item>
+            <nz-form-label nzRequired>Título</nz-form-label>
+            <nz-form-control nzErrorTip="Por favor ingrese un título">
+              <input nz-input formControlName="title" placeholder="Título de la notificación" />
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label nzRequired>Mensaje</nz-form-label>
+            <nz-form-control nzErrorTip="Por favor ingrese un mensaje">
+              <textarea nz-input formControlName="message" [nzAutosize]="{ minRows: 3, maxRows: 6 }" 
+                placeholder="Contenido de la notificación"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label>Tipo</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="type" nzPlaceHolder="Seleccione un tipo">
+                <nz-option nzValue="info" nzLabel="Información"></nz-option>
+                <nz-option nzValue="success" nzLabel="Éxito"></nz-option>
+                <nz-option nzValue="warning" nzLabel="Advertencia"></nz-option>
+                <nz-option nzValue="error" nzLabel="Error"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+
+          <button nz-button nzType="primary" [nzLoading]="loading" [disabled]="!broadcastForm.valid">
+            <span nz-icon nzType="notification"></span>
+            Enviar a Todos
+          </button>
+        </form>
+      </nz-tab>
+
+      <!-- Tab: Enviar a Sala -->
+      <nz-tab nzTitle="Enviar a Sala">
+        <form nz-form [formGroup]="roomForm" (ngSubmit)="sendToRoom()" nzLayout="vertical">
+          <nz-form-item>
+            <nz-form-label nzRequired>Nombre de la Sala</nz-form-label>
+            <nz-form-control nzErrorTip="Por favor ingrese el nombre de la sala">
+              <input nz-input formControlName="room" placeholder="Ej: general, ventas, etc." />
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label nzRequired>Título</nz-form-label>
+            <nz-form-control nzErrorTip="Por favor ingrese un título">
+              <input nz-input formControlName="title" placeholder="Título de la notificación" />
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label nzRequired>Mensaje</nz-form-label>
+            <nz-form-control nzErrorTip="Por favor ingrese un mensaje">
+              <textarea nz-input formControlName="message" [nzAutosize]="{ minRows: 3, maxRows: 6 }" 
+                placeholder="Contenido de la notificación"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label>Tipo</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="type" nzPlaceHolder="Seleccione un tipo">
+                <nz-option nzValue="info" nzLabel="Información"></nz-option>
+                <nz-option nzValue="success" nzLabel="Éxito"></nz-option>
+                <nz-option nzValue="warning" nzLabel="Advertencia"></nz-option>
+                <nz-option nzValue="error" nzLabel="Error"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+
+          <button nz-button nzType="primary" [nzLoading]="loading" [disabled]="!roomForm.valid">
+            <span nz-icon nzType="team"></span>
+            Enviar a Sala
+          </button>
+        </form>
+      </nz-tab>
+
+      <!-- Tab: Usuarios Conectados -->
+      <nz-tab nzTitle="Usuarios Conectados">
+        <div class="connected-users-section">
+          <button nz-button nzType="default" (click)="loadConnectedUsers()" [nzLoading]="loading" style="margin-bottom: 16px;">
+            <span nz-icon nzType="reload"></span>
+            Actualizar
+          </button>
+
+          <nz-empty *ngIf="connectedUsers.length === 0 && !loading" nzNotFoundContent="No hay usuarios conectados">
+          </nz-empty>
+
+          <nz-list [nzDataSource]="connectedUsers" nzBordered nzSize="small" *ngIf="connectedUsers.length > 0">
+            <nz-list-item *ngFor="let user of connectedUsers">
+              <nz-list-item-meta>
+                <nz-list-item-meta-avatar>
+                  <nz-avatar nzIcon="user" [style.background-color]="'#87d068'"></nz-avatar>
+                </nz-list-item-meta-avatar>
+                <nz-list-item-meta-title>
+                  {{ user.userId }}
+                </nz-list-item-meta-title>
+                <nz-list-item-meta-description>
+                  Socket: {{ user.socketId }} | Conectado: {{ user.connectedAt | date:'short' }}
+                </nz-list-item-meta-description>
+              </nz-list-item-meta>
+              <ul nz-list-item-actions>
+                <nz-list-item-action>
+                  <nz-badge nzStatus="success" nzText="Online"></nz-badge>
+                </nz-list-item-action>
+              </ul>
+            </nz-list-item>
+          </nz-list>
+        </div>
+      </nz-tab>
+    </nz-tabset>
+  </nz-card>
+
+  <!-- Historial de Notificaciones Recibidas -->
+  <nz-card nzTitle="Notificaciones Recibidas" style="margin-top: 24px;" [nzExtra]="clearTemplate">
+    <nz-empty *ngIf="receivedNotifications.length === 0" nzNotFoundContent="No hay notificaciones">
+    </nz-empty>
+
+    <nz-timeline *ngIf="receivedNotifications.length > 0">
+      <nz-timeline-item *ngFor="let notif of receivedNotifications" [nzColor]="getTimelineColor(notif.type)">
+        <div class="notification-item">
+          <div class="notification-header">
+            <strong>{{ notif.title }}</strong>
+            <nz-tag [nzColor]="getTagColor(notif.type)">{{ notif.type }}</nz-tag>
+          </div>
+          <p>{{ notif.message }}</p>
+          <small class="notification-time">{{ notif.timestamp | date:'medium' }}</small>
+        </div>
+      </nz-timeline-item>
+    </nz-timeline>
+  </nz-card>
+</div>
+
+<ng-template #cardTitle>
+  <span nz-icon nzType="bell" nzTheme="outline"></span>
+  Gestión de Notificaciones
+</ng-template>
+
+<ng-template #extraTemplate>
+  <nz-badge [nzStatus]="wsConnected ? 'success' : 'error'" [nzText]="wsConnected ? 'Conectado' : 'Desconectado'">
+  </nz-badge>
+</ng-template>
+
+<ng-template #clearTemplate>
+  <button nz-button nzType="link" nzDanger (click)="clearNotifications()" *ngIf="receivedNotifications.length > 0">
+    <span nz-icon nzType="delete"></span>
+    Limpiar
+  </button>
+</ng-template>

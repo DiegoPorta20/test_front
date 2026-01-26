@@ -1,0 +1,165 @@
+<div class="dashboard-container">
+  <nz-card nzTitle="Panel de Control" class="welcome-card">
+    <div class="welcome-content">
+      <h2>Bienvenido a tu Sistema de Gestión</h2>
+      <p>Esta aplicación te permite gestionar notificaciones en tiempo real, archivos en S3 y colas SQS.</p>
+      
+      <nz-row [nzGutter]="16" style="margin-top: 24px;">
+        <nz-col [nzSpan]="6">
+          <nz-statistic 
+            [nzValue]="stats.notifications" 
+            nzTitle="Notificaciones Enviadas"
+            [nzPrefix]="bellIcon">
+          </nz-statistic>
+          <ng-template #bellIcon>
+            <span nz-icon nzType="bell" style="color: #1890ff;"></span>
+          </ng-template>
+        </nz-col>
+        
+        <nz-col [nzSpan]="6">
+          <nz-statistic 
+            [nzValue]="stats.files" 
+            nzTitle="Archivos Subidos"
+            [nzPrefix]="fileIcon">
+          </nz-statistic>
+          <ng-template #fileIcon>
+            <span nz-icon nzType="file" style="color: #52c41a;"></span>
+          </ng-template>
+        </nz-col>
+        
+        <nz-col [nzSpan]="6">
+          <nz-statistic 
+            [nzValue]="stats.messages" 
+            nzTitle="Mensajes en Cola"
+            [nzPrefix]="messageIcon">
+          </nz-statistic>
+          <ng-template #messageIcon>
+            <span nz-icon nzType="message" style="color: #faad14;"></span>
+          </ng-template>
+        </nz-col>
+        
+        <nz-col [nzSpan]="6">
+          <nz-statistic 
+            [nzValue]="stats.emails" 
+            nzTitle="Correos Enviados"
+            [nzPrefix]="emailIcon">
+          </nz-statistic>
+          <ng-template #emailIcon>
+            <span nz-icon nzType="mail" style="color: #eb2f96;"></span>
+          </ng-template>
+        </nz-col>
+      </nz-row>
+    </div>
+  </nz-card>
+
+  <nz-row [nzGutter]="16" style="margin-top: 24px;">
+    <nz-col [nzSpan]="6">
+      <nz-card class="feature-card" (click)="navigateTo('/notifications')">
+        <div class="feature-content">
+          <span nz-icon nzType="bell" nzTheme="outline" class="feature-icon notification-icon"></span>
+          <h3>Notificaciones</h3>
+          <p>Envía notificaciones en tiempo real a usuarios específicos, salas o broadcast a todos.</p>
+          <button nz-button nzType="primary">
+            Gestionar
+            <span nz-icon nzType="arrow-right"></span>
+          </button>
+        </div>
+      </nz-card>
+    </nz-col>
+
+    <nz-col [nzSpan]="6">
+      <nz-card class="feature-card" (click)="navigateTo('/s3')">
+        <div class="feature-content">
+          <span nz-icon nzType="cloud-upload" nzTheme="outline" class="feature-icon s3-icon"></span>
+          <h3>Archivos S3</h3>
+          <p>Sube, gestiona y comparte archivos en AWS S3 con URLs firmadas seguras.</p>
+          <button nz-button nzType="primary">
+            Gestionar
+            <span nz-icon nzType="arrow-right"></span>
+          </button>
+        </div>
+      </nz-card>
+    </nz-col>
+
+    <nz-col [nzSpan]="6">
+      <nz-card class="feature-card" (click)="navigateTo('/sqs')">
+        <div class="feature-content">
+          <span nz-icon nzType="inbox" nzTheme="outline" class="feature-icon sqs-icon"></span>
+          <h3>Colas SQS</h3>
+          <p>Envía y recibe mensajes desde colas de AWS SQS para procesamiento asíncrono.</p>
+          <button nz-button nzType="primary">
+            Gestionar
+            <span nz-icon nzType="arrow-right"></span>
+          </button>
+        </div>
+      </nz-card>
+    </nz-col>
+    
+    <nz-col [nzSpan]="6">
+      <nz-card class="feature-card" (click)="navigateTo('/ses')">
+        <div class="feature-content">
+          <span nz-icon nzType="mail" nzTheme="outline" class="feature-icon ses-icon"></span>
+          <h3>Correos SES</h3>
+          <p>Envía correos electrónicos mediante AWS SES con soporte para plantillas y envío masivo.</p>
+          <button nz-button nzType="primary">
+            Gestionar
+            <span nz-icon nzType="arrow-right"></span>
+          </button>
+        </div>
+      </nz-card>
+    </nz-col>
+  </nz-row>
+
+  <nz-card nzTitle="Características Principales" style="margin-top: 24px;">
+    <nz-row [nzGutter]="16">
+      <nz-col [nzSpan]="8">
+        <ul class="features-list">
+          <li>
+            <span nz-icon nzType="check-circle" nzTheme="fill" style="color: #52c41a;"></span>
+            WebSockets para notificaciones en tiempo real
+          </li>
+          <li>
+            <span nz-icon nzType="check-circle" nzTheme="fill" style="color: #52c41a;"></span>
+            Gestión completa de archivos en AWS S3
+          </li>
+          <li>
+            <span nz-icon nzType="check-circle" nzTheme="fill" style="color: #52c41a;"></span>
+            Sistema de colas con AWS SQS
+          </li>
+        </ul>
+      </nz-col>
+      <nz-col [nzSpan]="8">
+        <ul class="features-list">
+          <li>
+            <span nz-icon nzType="check-circle" nzTheme="fill" style="color: #52c41a;"></span>
+            Envío de correos con AWS SES
+          </li>
+          <li>
+            <span nz-icon nzType="check-circle" nzTheme="fill" style="color: #52c41a;"></span>
+            Plantillas de correo personalizables
+          </li>
+          <li>
+            <span nz-icon nzType="check-circle" nzTheme="fill" style="color: #52c41a;"></span>
+            Envío masivo de correos
+          </li>
+        </ul>
+      </nz-col>
+      <nz-col [nzSpan]="8">
+        <ul class="features-list">
+          <li>
+            <span nz-icon nzType="check-circle" nzTheme="fill" style="color: #52c41a;"></span>
+            URLs firmadas para compartir archivos seguros
+          </li>
+          <li>
+            <span nz-icon nzType="check-circle" nzTheme="fill" style="color: #52c41a;"></span>
+            Envío de mensajes individuales o por lotes
+          </li>
+          <li>
+            <span nz-icon nzType="check-circle" nzTheme="fill" style="color: #52c41a;"></span>
+            Interfaz moderna y responsive
+          </li>
+        </ul>
+      </nz-col>
+    </nz-row>
+  </nz-card>
+</div>

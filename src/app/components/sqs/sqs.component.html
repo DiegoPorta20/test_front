@@ -1,0 +1,177 @@
+<div class="sqs-container">
+  <nz-card nzTitle="Gestión de Colas SQS">
+    <nz-tabset>
+      <!-- Tab: Enviar Mensaje -->
+      <nz-tab nzTitle="Enviar Mensaje">
+        <form nz-form [formGroup]="sendMessageForm" (ngSubmit)="sendMessage()" nzLayout="vertical">
+          <nz-form-item>
+            <nz-form-label nzRequired>Mensaje</nz-form-label>
+            <nz-form-control nzErrorTip="Por favor ingrese un mensaje">
+              <textarea 
+                nz-input 
+                formControlName="message" 
+                [nzAutosize]="{ minRows: 3, maxRows: 6 }"
+                placeholder="Contenido del mensaje"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label>Delay (segundos)</nz-form-label>
+            <nz-form-control>
+              <nz-input-number 
+                formControlName="delaySeconds"
+                [nzMin]="0"
+                [nzMax]="900"
+                [nzStep]="1"
+                style="width: 100%;"
+                nzPlaceHolder="0-900 segundos">
+              </nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+
+          <button nz-button nzType="primary" [nzLoading]="sending" [disabled]="!sendMessageForm.valid">
+            <span nz-icon nzType="send"></span>
+            Enviar Mensaje
+          </button>
+        </form>
+      </nz-tab>
+
+      <!-- Tab: Enviar Batch -->
+      <nz-tab nzTitle="Enviar Batch">
+        <div class="batch-section">
+          <div *ngFor="let msg of batchMessages; let i = index" class="batch-message-item">
+            <nz-card [nzTitle]="'Mensaje ' + (i + 1)" [nzExtra]="removeTemplate" nzSize="small">
+              <ng-template #removeTemplate>
+                <button nz-button nzType="text" nzDanger (click)="removeBatchMessage(i)">
+                  <span nz-icon nzType="close"></span>
+                </button>
+              </ng-template>
+
+              <nz-form-item>
+                <nz-form-label>ID</nz-form-label>
+                <nz-form-control>
+                  <input nz-input [(ngModel)]="msg.id" placeholder="ID único del mensaje" />
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-label>Mensaje</nz-form-label>
+                <nz-form-control>
+                  <textarea nz-input [(ngModel)]="msg.message" [nzAutosize]="{ minRows: 2, maxRows: 4 }"></textarea>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-label>Delay (segundos)</nz-form-label>
+                <nz-form-control>
+                  <nz-input-number [(ngModel)]="msg.delaySeconds" [nzMin]="0" [nzMax]="900" style="width: 100%;"></nz-input-number>
+                </nz-form-control>
+              </nz-form-item>
+            </nz-card>
+          </div>
+
+          <button nz-button nzType="dashed" (click)="addBatchMessage()" style="width: 100%; margin-bottom: 16px;">
+            <span nz-icon nzType="plus"></span>
+            Agregar Mensaje
+          </button>
+
+          <button 
+            nz-button 
+            nzType="primary" 
+            [nzLoading]="sendingBatch" 
+            [disabled]="batchMessages.length === 0"
+            (click)="sendMessageBatch()">
+            <span nz-icon nzType="send"></span>
+            Enviar Batch
+          </button>
+        </div>
+      </nz-tab>
+
+      <!-- Tab: Recibir Mensajes -->
+      <nz-tab nzTitle="Recibir Mensajes">
+        <form nz-form nzLayout="vertical">
+          <nz-form-item>
+            <nz-form-label>Máximo de Mensajes</nz-form-label>
+            <nz-form-control>
+              <nz-input-number 
+                [(ngModel)]="maxMessages"
+                [ngModel]="maxMessages"
+                name="maxMessages"
+                [nzMin]="1"
+                [nzMax]="10"
+                style="width: 100%;">
+              </nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label>Tiempo de Espera (segundos)</nz-form-label>
+            <nz-form-control>
+              <nz-input-number 
+                [(ngModel)]="waitTimeSeconds"
+                [ngModel]="waitTimeSeconds"
+                name="waitTimeSeconds"
+                [nzMin]="0"
+                [nzMax]="20"
+                style="width: 100%;">
+              </nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+
+          <button nz-button nzType="primary" (click)="receiveMessages()" [nzLoading]="receiving">
+            <span nz-icon nzType="download"></span>
+            Recibir Mensajes
+          </button>
+        </form>
+
+        <nz-divider></nz-divider>
+
+        <div *ngIf="receivedMessages.length > 0">
+          <h4>Mensajes Recibidos ({{ receivedMessages.length }})</h4>
+          <nz-list [nzDataSource]="receivedMessages" nzBordered>
+            <nz-list-item *ngFor="let msg of receivedMessages">
+              <nz-list-item-meta>
+                <nz-list-item-meta-title>
+                  Message ID: {{ msg.MessageId }}
+                </nz-list-item-meta-title>
+                <nz-list-item-meta-description>
+                  <div><strong>Body:</strong> {{ msg.Body }}</div>
+                  <div><strong>Receipt Handle:</strong> <code>{{ msg.ReceiptHandle }}</code></div>
+                  <div *ngIf="msg.Attributes">
+                    <strong>Atributos:</strong>
+                    <ul>
+                      <li *ngFor="let attr of getObjectKeys(msg.Attributes)">
+                        {{ attr }}: {{ msg.Attributes[attr] }}
+                      </li>
+                    </ul>
+                  </div>
+                </nz-list-item-meta-description>
+              </nz-list-item-meta>
+            </nz-list-item>
+          </nz-list>
+        </div>
+
+        <nz-empty *ngIf="receivedMessages.length === 0" nzNotFoundContent="No hay mensajes recibidos"></nz-empty>
+      </nz-tab>
+
+      <!-- Tab: Atributos de Cola -->
+      <nz-tab nzTitle="Atributos de Cola">
+        <button nz-button nzType="default" (click)="loadQueueAttributes()" [nzLoading]="loadingAttributes" style="margin-bottom: 16px;">
+          <span nz-icon nzType="reload"></span>
+          Actualizar Atributos
+        </button>
+
+        <nz-descriptions nzBordered *ngIf="queueAttributes">
+          <nz-descriptions-item 
+            *ngFor="let attr of getObjectKeys(queueAttributes)" 
+            [nzTitle]="attr"
+            [nzSpan]="3">
+            {{ queueAttributes[attr] }}
+          </nz-descriptions-item>
+        </nz-descriptions>
+
+        <nz-empty *ngIf="!queueAttributes" nzNotFoundContent="Cargue los atributos de la cola"></nz-empty>
+      </nz-tab>
+    </nz-tabset>
+  </nz-card>
+</div>
