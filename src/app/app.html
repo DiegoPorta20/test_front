@@ -1,17 +1,17 @@
 <nz-layout class="app-layout">
   <!-- Sidebar -->
-  <nz-sider 
-    class="menu-sidebar" 
-    nzCollapsible 
-    nzWidth="250px" 
-    nzBreakpoint="lg" 
+  <nz-sider
+    class="menu-sidebar"
+    nzCollapsible
+    nzWidth="250px"
+    nzBreakpoint="lg"
     [(nzCollapsed)]="isCollapsed"
     [nzTrigger]="null">
-    
+
     <div class="sidebar-logo">
       <h1>{{ isCollapsed ? 'SG' : title() }}</h1>
     </div>
-    
+
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
       <li nz-menu-item nzMatchRouter>
         <a routerLink="/dashboard">
@@ -19,28 +19,28 @@
           <span>Dashboard</span>
         </a>
       </li>
-      
+
       <li nz-menu-item nzMatchRouter>
         <a routerLink="/notifications">
           <span nz-icon nzType="bell" nzTheme="outline"></span>
           <span>Notificaciones</span>
         </a>
       </li>
-      
+
       <li nz-menu-item nzMatchRouter>
         <a routerLink="/s3">
           <span nz-icon nzType="cloud-upload" nzTheme="outline"></span>
           <span>Archivos S3</span>
         </a>
       </li>
-      
+
       <li nz-menu-item nzMatchRouter>
         <a routerLink="/sqs">
           <span nz-icon nzType="inbox" nzTheme="outline"></span>
           <span>Colas SQS</span>
         </a>
       </li>
-      
+
       <li nz-menu-item nzMatchRouter>
         <a routerLink="/ses">
           <span nz-icon nzType="mail" nzTheme="outline"></span>
@@ -49,30 +49,30 @@
       </li>
     </ul>
   </nz-sider>
-  
+
   <!-- Main Layout -->
   <nz-layout>
     <!-- Header -->
     <nz-header>
       <div class="app-header">
         <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
-          <span 
-            class="trigger" 
-            nz-icon 
+          <span
+            class="trigger"
+            nz-icon
             [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'">
           </span>
         </span>
         <span class="header-title">Sistema de Gestión AWS</span>
       </div>
     </nz-header>
-    
+
     <!-- Content -->
     <nz-content>
       <div class="inner-content">
         <router-outlet></router-outlet>
       </div>
     </nz-content>
-    
+
     <!-- Footer -->
     <nz-footer>
       Sistema de Gestión ©2026 - Creado con Angular y Ant Design

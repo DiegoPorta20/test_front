@@ -94,7 +94,7 @@ export class S3Component {
       next: (response) => {
         this.uploading = false;
         this.message.success('Archivo subido exitosamente');
-        
+
         this.uploadedFiles.unshift({
           name: file.name,
           key: response.data.key,
@@ -138,7 +138,7 @@ export class S3Component {
       next: (response) => {
         this.uploadingMultiple = false;
         this.message.success(`${response.data.length} archivos subidos exitosamente`);
-        
+
         response.data.forEach((result: UploadResult, index: number) => {
           this.uploadedFiles.unshift({
             name: files[index].name,

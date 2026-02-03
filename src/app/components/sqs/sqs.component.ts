@@ -39,7 +39,7 @@ import { SqsService, SqsBatchMessage } from '../../services/sqs.service';
 })
 export class SqsComponent implements OnInit {
   sendMessageForm: FormGroup;
-  
+
   // Enviar mensaje simple
   sending = false;
 
@@ -113,7 +113,7 @@ export class SqsComponent implements OnInit {
   sendMessageBatch(): void {
     // Validar que todos los mensajes tengan contenido
     const validMessages = this.batchMessages.filter(msg => msg.message.trim() !== '');
-    
+
     if (validMessages.length === 0) {
       this.message.warning('Debe agregar al menos un mensaje con contenido');
       return;

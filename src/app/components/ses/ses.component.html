@@ -7,9 +7,9 @@
           <nz-form-item>
             <nz-form-label nzRequired>Destinatario(s)</nz-form-label>
             <nz-form-control nzErrorTip="Por favor ingrese al menos un destinatario">
-              <nz-select 
-                formControlName="to" 
-                nzMode="tags" 
+              <nz-select
+                formControlName="to"
+                nzMode="tags"
                 nzPlaceHolder="Ingrese emails y presione Enter">
               </nz-select>
             </nz-form-control>
@@ -25,10 +25,10 @@
           <nz-form-item>
             <nz-form-label nzRequired>Cuerpo del Mensaje</nz-form-label>
             <nz-form-control nzErrorTip="Por favor ingrese el mensaje">
-              <textarea 
-                nz-input 
-                formControlName="body" 
-                [nzAutosize]="{ minRows: 6, maxRows: 12 }" 
+              <textarea
+                nz-input
+                formControlName="body"
+                [nzAutosize]="{ minRows: 6, maxRows: 12 }"
                 placeholder="Contenido del correo">
               </textarea>
             </nz-form-control>
@@ -45,9 +45,9 @@
               <nz-form-item>
                 <nz-form-label>CC (Con Copia)</nz-form-label>
                 <nz-form-control>
-                  <nz-select 
-                    formControlName="cc" 
-                    nzMode="tags" 
+                  <nz-select
+                    formControlName="cc"
+                    nzMode="tags"
                     nzPlaceHolder="Emails con copia">
                   </nz-select>
                 </nz-form-control>
@@ -56,9 +56,9 @@
               <nz-form-item>
                 <nz-form-label>BCC (Copia Oculta)</nz-form-label>
                 <nz-form-control>
-                  <nz-select 
-                    formControlName="bcc" 
-                    nzMode="tags" 
+                  <nz-select
+                    formControlName="bcc"
+                    nzMode="tags"
                     nzPlaceHolder="Emails con copia oculta">
                   </nz-select>
                 </nz-form-control>
@@ -67,9 +67,9 @@
               <nz-form-item>
                 <nz-form-label>Reply To</nz-form-label>
                 <nz-form-control>
-                  <nz-select 
-                    formControlName="replyTo" 
-                    nzMode="tags" 
+                  <nz-select
+                    formControlName="replyTo"
+                    nzMode="tags"
                     nzPlaceHolder="Email(s) de respuesta">
                   </nz-select>
                 </nz-form-control>
@@ -77,10 +77,10 @@
             </nz-collapse-panel>
           </nz-collapse>
 
-          <button 
-            nz-button 
-            nzType="primary" 
-            [nzLoading]="sending" 
+          <button
+            nz-button
+            nzType="primary"
+            [nzLoading]="sending"
             [disabled]="!emailForm.valid"
             style="margin-top: 16px;">
             <span nz-icon nzType="mail"></span>
@@ -95,9 +95,9 @@
           <nz-form-item>
             <nz-form-label nzRequired>Destinatarios</nz-form-label>
             <nz-form-control nzErrorTip="Por favor ingrese al menos un destinatario">
-              <nz-select 
-                formControlName="recipients" 
-                nzMode="tags" 
+              <nz-select
+                formControlName="recipients"
+                nzMode="tags"
                 nzPlaceHolder="Ingrese emails y presione Enter">
               </nz-select>
               <small>Los correos se enviarán individualmente a cada destinatario</small>
@@ -114,10 +114,10 @@
           <nz-form-item>
             <nz-form-label nzRequired>Cuerpo del Mensaje</nz-form-label>
             <nz-form-control nzErrorTip="Por favor ingrese el mensaje">
-              <textarea 
-                nz-input 
-                formControlName="body" 
-                [nzAutosize]="{ minRows: 6, maxRows: 12 }" 
+              <textarea
+                nz-input
+                formControlName="body"
+                [nzAutosize]="{ minRows: 6, maxRows: 12 }"
                 placeholder="Contenido del correo">
               </textarea>
             </nz-form-control>
@@ -129,10 +129,10 @@
             </nz-form-control>
           </nz-form-item>
 
-          <button 
-            nz-button 
-            nzType="primary" 
-            [nzLoading]="sendingBulk" 
+          <button
+            nz-button
+            nzType="primary"
+            [nzLoading]="sendingBulk"
             [disabled]="!bulkEmailForm.valid"
             style="margin-top: 16px;">
             <span nz-icon nzType="mail"></span>
@@ -143,33 +143,33 @@
 
       <!-- Tab: Plantillas -->
       <nz-tab nzTitle="Plantillas">
-        <button 
-          nz-button 
-          nzType="default" 
-          (click)="loadTemplates()" 
+        <button
+          nz-button
+          nzType="default"
+          (click)="loadTemplates()"
           [nzLoading]="loadingTemplates"
           style="margin-bottom: 16px;">
           <span nz-icon nzType="reload"></span>
           Actualizar Plantillas
         </button>
 
-        <button 
-          nz-button 
-          nzType="primary" 
+        <button
+          nz-button
+          nzType="primary"
           (click)="showCreateTemplateModal()"
           style="margin-bottom: 16px; margin-left: 8px;">
           <span nz-icon nzType="plus"></span>
           Nueva Plantilla
         </button>
 
-        <nz-empty 
-          *ngIf="templates.length === 0 && !loadingTemplates" 
+        <nz-empty
+          *ngIf="templates.length === 0 && !loadingTemplates"
           nzNotFoundContent="No hay plantillas creadas">
         </nz-empty>
 
-        <nz-list 
+        <nz-list
           *ngIf="templates.length > 0"
-          [nzDataSource]="templates" 
+          [nzDataSource]="templates"
           nzBordered>
           <nz-list-item *ngFor="let template of templates">
             <nz-list-item-meta>
@@ -235,10 +235,10 @@
       <nz-form-item>
         <nz-form-label nzRequired>Cuerpo HTML</nz-form-label>
         <nz-form-control nzErrorTip="Por favor ingrese el cuerpo HTML">
-          <textarea 
-            nz-input 
-            formControlName="htmlBody" 
-            [nzAutosize]="{ minRows: 6, maxRows: 12 }" 
+          <textarea
+            nz-input
+            formControlName="htmlBody"
+            [nzAutosize]="{ minRows: 6, maxRows: 12 }"
             placeholder="<h1>Hola</h1><p>Este es un ejemplo de plantilla HTML</p>">
           </textarea>
         </nz-form-control>
@@ -247,10 +247,10 @@
       <nz-form-item>
         <nz-form-label>Cuerpo Texto Plano (opcional)</nz-form-label>
         <nz-form-control>
-          <textarea 
-            nz-input 
-            formControlName="textBody" 
-            [nzAutosize]="{ minRows: 3, maxRows: 6 }" 
+          <textarea
+            nz-input
+            formControlName="textBody"
+            [nzAutosize]="{ minRows: 3, maxRows: 6 }"
             placeholder="Versión en texto plano">
           </textarea>
         </nz-form-control>
@@ -272,9 +272,9 @@
       <nz-form-item>
         <nz-form-label nzRequired>Destinatario(s)</nz-form-label>
         <nz-form-control nzErrorTip="Por favor ingrese al menos un destinatario">
-          <nz-select 
-            formControlName="to" 
-            nzMode="tags" 
+          <nz-select
+            formControlName="to"
+            nzMode="tags"
             nzPlaceHolder="Ingrese emails">
           </nz-select>
         </nz-form-control>
@@ -283,10 +283,10 @@
       <nz-form-item>
         <nz-form-label nzRequired>Datos de la Plantilla (JSON)</nz-form-label>
         <nz-form-control nzErrorTip="Por favor ingrese datos válidos en formato JSON">
-          <textarea 
-            nz-input 
-            formControlName="templateData" 
-            [nzAutosize]="{ minRows: 4, maxRows: 8 }" 
+          <textarea
+            nz-input
+            formControlName="templateData"
+            [nzAutosize]="{ minRows: 4, maxRows: 8 }"
             placeholder='{"nombre": "Juan", "empresa": "Mi Empresa"}'>
           </textarea>
           <small>Datos para reemplazar las variables de la plantilla</small>

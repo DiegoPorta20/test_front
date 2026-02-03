@@ -35,7 +35,7 @@ export class NotificationService {
   private socket: Socket | null = null;
   private notificationSubject = new Subject<Notification>();
   public notifications$ = this.notificationSubject.asObservable();
-  
+
   private connectedSubject = new Subject<boolean>();
   public connected$ = this.connectedSubject.asObservable();
 
@@ -48,7 +48,7 @@ export class NotificationService {
     }
 
     this.socket = io(environment.wsUrl);
-    
+
     // Registrar usuario después de conectar
     this.socket.on('connect', () => {
       this.socket?.emit('register', { userId });

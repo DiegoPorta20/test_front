@@ -7,9 +7,9 @@
           <nz-form-item>
             <nz-form-label nzRequired>Mensaje</nz-form-label>
             <nz-form-control nzErrorTip="Por favor ingrese un mensaje">
-              <textarea 
-                nz-input 
-                formControlName="message" 
+              <textarea
+                nz-input
+                formControlName="message"
                 [nzAutosize]="{ minRows: 3, maxRows: 6 }"
                 placeholder="Contenido del mensaje"></textarea>
             </nz-form-control>
@@ -18,7 +18,7 @@
           <nz-form-item>
             <nz-form-label>Delay (segundos)</nz-form-label>
             <nz-form-control>
-              <nz-input-number 
+              <nz-input-number
                 formControlName="delaySeconds"
                 [nzMin]="0"
                 [nzMax]="900"
@@ -75,10 +75,10 @@
             Agregar Mensaje
           </button>
 
-          <button 
-            nz-button 
-            nzType="primary" 
-            [nzLoading]="sendingBatch" 
+          <button
+            nz-button
+            nzType="primary"
+            [nzLoading]="sendingBatch"
             [disabled]="batchMessages.length === 0"
             (click)="sendMessageBatch()">
             <span nz-icon nzType="send"></span>
@@ -93,7 +93,7 @@
           <nz-form-item>
             <nz-form-label>Máximo de Mensajes</nz-form-label>
             <nz-form-control>
-              <nz-input-number 
+              <nz-input-number
                 [(ngModel)]="maxMessages"
                 [ngModel]="maxMessages"
                 name="maxMessages"
@@ -107,7 +107,7 @@
           <nz-form-item>
             <nz-form-label>Tiempo de Espera (segundos)</nz-form-label>
             <nz-form-control>
-              <nz-input-number 
+              <nz-input-number
                 [(ngModel)]="waitTimeSeconds"
                 [ngModel]="waitTimeSeconds"
                 name="waitTimeSeconds"
@@ -162,8 +162,8 @@
         </button>
 
         <nz-descriptions nzBordered *ngIf="queueAttributes">
-          <nz-descriptions-item 
-            *ngFor="let attr of getObjectKeys(queueAttributes)" 
+          <nz-descriptions-item
+            *ngFor="let attr of getObjectKeys(queueAttributes)"
             [nzTitle]="attr"
             [nzSpan]="3">
             {{ queueAttributes[attr] }}

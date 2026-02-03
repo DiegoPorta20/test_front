@@ -3,11 +3,11 @@
     <div class="welcome-content">
       <h2>Bienvenido a tu Sistema de Gestión</h2>
       <p>Esta aplicación te permite gestionar notificaciones en tiempo real, archivos en S3 y colas SQS.</p>
-      
+
       <nz-row [nzGutter]="16" style="margin-top: 24px;">
         <nz-col [nzSpan]="6">
-          <nz-statistic 
-            [nzValue]="stats.notifications" 
+          <nz-statistic
+            [nzValue]="stats.notifications"
             nzTitle="Notificaciones Enviadas"
             [nzPrefix]="bellIcon">
           </nz-statistic>
@@ -15,10 +15,10 @@
             <span nz-icon nzType="bell" style="color: #1890ff;"></span>
           </ng-template>
         </nz-col>
-        
+
         <nz-col [nzSpan]="6">
-          <nz-statistic 
-            [nzValue]="stats.files" 
+          <nz-statistic
+            [nzValue]="stats.files"
             nzTitle="Archivos Subidos"
             [nzPrefix]="fileIcon">
           </nz-statistic>
@@ -26,10 +26,10 @@
             <span nz-icon nzType="file" style="color: #52c41a;"></span>
           </ng-template>
         </nz-col>
-        
+
         <nz-col [nzSpan]="6">
-          <nz-statistic 
-            [nzValue]="stats.messages" 
+          <nz-statistic
+            [nzValue]="stats.messages"
             nzTitle="Mensajes en Cola"
             [nzPrefix]="messageIcon">
           </nz-statistic>
@@ -37,10 +37,10 @@
             <span nz-icon nzType="message" style="color: #faad14;"></span>
           </ng-template>
         </nz-col>
-        
+
         <nz-col [nzSpan]="6">
-          <nz-statistic 
-            [nzValue]="stats.emails" 
+          <nz-statistic
+            [nzValue]="stats.emails"
             nzTitle="Correos Enviados"
             [nzPrefix]="emailIcon">
           </nz-statistic>
@@ -94,7 +94,7 @@
         </div>
       </nz-card>
     </nz-col>
-    
+
     <nz-col [nzSpan]="6">
       <nz-card class="feature-card" (click)="navigateTo('/ses')">
         <div class="feature-content">

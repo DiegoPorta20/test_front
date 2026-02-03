@@ -18,13 +18,13 @@ export class S3Service {
   uploadFile(file: File, folder?: string, userId?: string): Observable<any> {
     const formData = new FormData();
     formData.append('file', file);
-    
+
     let url = `${environment.apiUrl}/s3/upload`;
     const params: string[] = [];
-    
+
     if (folder) params.push(`folder=${folder}`);
     if (userId) params.push(`userId=${userId}`);
-    
+
     if (params.length > 0) {
       url += '?' + params.join('&');
     }

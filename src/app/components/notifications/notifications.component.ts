@@ -45,14 +45,14 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   sendUserForm: FormGroup;
   broadcastForm: FormGroup;
   roomForm: FormGroup;
-  
+
   loading = false;
   wsConnected = false;
   selectedTabIndex = 0;
-  
+
   connectedUsers: ConnectedUser[] = [];
   receivedNotifications: Notification[] = [];
-  
+
   private notificationSubscription?: Subscription;
   private connectedSubscription?: Subscription;
 
@@ -121,7 +121,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     if (this.sendUserForm.valid) {
       this.loading = true;
       const formValue = this.sendUserForm.value;
-      
+
       this.notificationService.sendNotification(
         formValue.userId,
         formValue.title,
@@ -150,7 +150,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     if (this.broadcastForm.valid) {
       this.loading = true;
       const formValue = this.broadcastForm.value;
-      
+
       this.notificationService.broadcastNotification(
         formValue.title,
         formValue.message,
@@ -174,7 +174,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     if (this.roomForm.valid) {
       this.loading = true;
       const formValue = this.roomForm.value;
-      
+
       this.notificationService.sendRoomNotification(
         formValue.room,
         formValue.title,

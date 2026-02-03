@@ -38,10 +38,10 @@ export class SqsService {
   receiveMessages(maxMessages?: number, waitTimeSeconds?: number): Observable<any> {
     let url = `${environment.apiUrl}/sqs/receive`;
     const params: string[] = [];
-    
+
     if (maxMessages) params.push(`maxMessages=${maxMessages}`);
     if (waitTimeSeconds) params.push(`waitTimeSeconds=${waitTimeSeconds}`);
-    
+
     if (params.length > 0) {
       url += '?' + params.join('&');
     }

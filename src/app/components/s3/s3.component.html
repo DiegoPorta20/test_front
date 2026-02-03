@@ -29,9 +29,9 @@
             </button>
           </nz-upload>
 
-          <button 
-            nz-button 
-            nzType="primary" 
+          <button
+            nz-button
+            nzType="primary"
             [nzLoading]="uploading"
             [disabled]="fileList.length === 0"
             (click)="handleUpload()"
@@ -63,9 +63,9 @@
             </button>
           </nz-upload>
 
-          <button 
-            nz-button 
-            nzType="primary" 
+          <button
+            nz-button
+            nzType="primary"
             [nzLoading]="uploadingMultiple"
             [disabled]="multipleFileList.length === 0"
             (click)="handleUploadMultiple()"
@@ -81,10 +81,10 @@
         <nz-empty *ngIf="uploadedFiles.length === 0" nzNotFoundContent="No hay archivos subidos">
         </nz-empty>
 
-        <nz-list 
+        <nz-list
           *ngIf="uploadedFiles.length > 0"
-          [nzDataSource]="uploadedFiles" 
-          nzBordered 
+          [nzDataSource]="uploadedFiles"
+          nzBordered
           nzSize="small">
           <nz-list-item *ngFor="let file of uploadedFiles">
             <nz-list-item-meta>
@@ -129,10 +129,10 @@
     <ng-container *nzModalContent>
       <p>Esta URL expira en {{ signedUrlExpiration }} segundos:</p>
       <nz-input-group [nzSuffix]="suffixIconButton">
-        <input 
-          nz-input 
-          [value]="signedUrl" 
-          readonly 
+        <input
+          nz-input
+          [value]="signedUrl"
+          readonly
           #urlInput />
       </nz-input-group>
       <ng-template #suffixIconButton>
@@ -140,10 +140,10 @@
           <span nz-icon nzType="copy"></span>
         </button>
       </ng-template>
-      <button 
-        nz-button 
-        nzType="primary" 
-        (click)="openUrl(signedUrl)" 
+      <button
+        nz-button
+        nzType="primary"
+        (click)="openUrl(signedUrl)"
         style="margin-top: 16px; width: 100%;">
         <span nz-icon nzType="eye"></span>
         Abrir en Nueva Pestaña

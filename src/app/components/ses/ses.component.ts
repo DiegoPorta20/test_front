@@ -53,11 +53,11 @@ export class SesComponent implements OnInit {
   creatingTemplate = false;
 
   templates: any[] = [];
-  
+
   createTemplateModalVisible = false;
   useTemplateModalVisible = false;
   viewTemplateModalVisible = false;
-  
+
   selectedTemplateName = '';
   viewingTemplate: any = null;
 
@@ -228,7 +228,7 @@ export class SesComponent implements OnInit {
 
   viewTemplate(templateName: string): void {
     this.selectedTemplateName = templateName;
-    
+
     this.sesService.getTemplate(templateName).subscribe({
       next: (response) => {
         this.viewingTemplate = response.data;
